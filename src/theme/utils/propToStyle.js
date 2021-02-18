@@ -1,15 +1,15 @@
-import { breakpointsMedia } from "./breakpointsMedia";
+import { breakpointsMedia } from './breakpointsMedia';
 
 export function propToStyle(propName) {
   return function (props) {
     const propValue = props[propName];
-    if (typeof propValue === "string") {
+    if (typeof propValue === 'string' || typeof propValue === 'number') {
       return {
         [propName]: props[propName],
       };
     }
 
-    if (typeof propValue === "object") {
+    if (typeof propValue === 'object') {
       return breakpointsMedia({
         xs: {
           [propName]: propValue.xs,
