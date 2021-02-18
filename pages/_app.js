@@ -1,7 +1,8 @@
-import { ThemeProvider } from "styled-components";
-import theme from "../src/theme";
-import GlobalStyle from "../src/theme/GlobalStyles";
-import Head from "next/head";
+import Head from 'next/head';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import theme from '../src/theme';
+import GlobalStyle from '../src/theme/GlobalStyles';
 
 export default function App({ Component, pageProps }) {
   return (
