@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Menu from '../src/components/commons/Menu';
 import Footer from '../src/components/commons/Footer';
 import { Button } from '../src/components/commons/Button';
 import Text from '../src/components/commons/foundation/Text';
 import { Grid } from '../src/components/commons/foundation/layout/Grid';
 import { Box } from '../src/components/commons/foundation/layout/Box';
+import Modal from '../src/components/commons/Modal';
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
   return (
     <>
       <Box
@@ -19,6 +22,14 @@ export default function Home() {
         backgroundRepeat="no-repeat"
         backgroundPosition="bottom right"
       >
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          {(props) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <Box backgroundColor="#fff" {...props}>
+              Ola mundosw
+            </Box>
+          )}
+        </Modal>
         <Menu />
         <Grid.Container
           marginTop={{
@@ -39,7 +50,6 @@ export default function Home() {
                 variant="title"
                 tag="h1"
                 color="tertiary.main"
-                // textAlign="right"
                 textAlign={{
                   xs: 'center',
                   md: 'left',
@@ -68,6 +78,9 @@ export default function Home() {
                   md: 'initial',
                 }}
                 display="block"
+                onClick={() => {
+                  setIsModalOpen(!isModalOpen);
+                }}
               >
                 Cadastrar
               </Button>
