@@ -74,6 +74,7 @@ function FormContent() {
 
 // eslint-disable-next-line react/prop-types
 export default function FormCadastro({ modalProps }) {
+  console.log(modalProps);
   return (
     <Grid.Row marginLeft={0} marginRight={0} flex={1} justifyContent="flex-end">
       <Grid.Col
@@ -96,6 +97,17 @@ export default function FormCadastro({ modalProps }) {
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...modalProps}
         >
+          <div
+            className="closeModal"
+            style={{
+              position: 'absolute',
+              top: '30px',
+              right: '30px',
+            }}
+          >
+            {modalProps.ButtonCloseModal}
+          </div>
+
           <FormContent />
         </Box>
       </Grid.Col>
