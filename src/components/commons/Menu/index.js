@@ -1,21 +1,21 @@
-import { MenuWrapper } from "./styles";
-import Logo from "../../../theme/Logo";
-import { Button } from "../Button";
-import Text from "../foundation/Text";
+import { MenuWrapper } from './styles';
+import Logo from '../../../theme/Logo';
+import { Button } from '../Button';
+import Text from '../../foundation/Text';
 
 export default function Menu() {
   const links = [
     {
-      display: "Home",
-      link: "/",
+      display: 'Home',
+      link: '/',
     },
     {
-      display: "Perguntas frequentes",
-      link: "/faq",
+      display: 'Perguntas frequentes',
+      link: '/faq',
     },
     {
-      display: "Sobre",
-      link: "/sobre",
+      display: 'Sobre',
+      link: '/sobre',
     },
   ];
 
