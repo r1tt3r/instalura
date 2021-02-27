@@ -86,18 +86,6 @@ export default function Modal({ isOpen, onClose, children }) {
           flex: 1,
         }}
       >
-        {/* <div
-          style={{
-            position: 'absolute',
-            top: '30px',
-            right: '30px',
-            color: 'gray',
-            cursor: 'pointer',
-            fontSize: '25px',
-          }}
-        >
-          X
-        </div> */}
         {children({
           'data-modal-safe-area': 'true',
           ButtonCloseModal: <ButtonCloseModal onClose={onClose} />,
