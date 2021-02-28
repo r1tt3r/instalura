@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <>
-      <Loader />
+      {/* <Loader /> */}
       <Box
         flex="1"
         display="flex"
