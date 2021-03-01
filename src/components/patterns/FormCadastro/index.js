@@ -38,15 +38,18 @@ function FormContent() {
     event.preventDefault();
     setSubmissionStatus(formState.LOADING);
     setIsFormSubmited(true);
+
+    const userDTO = {
+      username: userInfo.usuario,
+      name: userInfo.name,
+    };
+
     fetch('https://instalura-api.vercel.app/api/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        username: userInfo.usuario,
-        name: userInfo.name,
-      }),
+      body: JSON.stringify(userDTO),
     })
       .then((resp) => {
         if (resp.ok) {
@@ -54,14 +57,8 @@ function FormContent() {
         }
         throw new Error('Nao foi possivel cadastrar o usuario');
       })
-      .then((respConvert) => {
-        setSubmissionStatus(formState.DONE);
-        console.log(respConvert);
-      })
-      .catch((error) => {
-        setSubmissionStatus(formState.ERROR);
-        console.log(error);
-      });
+      .then(() => setSubmissionStatus(formState.DONE))
+      .catch(() => setSubmissionStatus(formState.ERROR));
   }
 
   const isFormInvalid =
