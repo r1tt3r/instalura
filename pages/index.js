@@ -7,7 +7,6 @@ import { Grid } from '../src/components/foundation/layout/Grid';
 import { Box } from '../src/components/foundation/layout/Box';
 import Modal from '../src/components/commons/Modal';
 import FormCadastro from '../src/components/patterns/FormCadastro';
-import Loader from '../src/components/commons/Loader';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);

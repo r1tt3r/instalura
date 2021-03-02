@@ -100,3 +100,7 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
 };
+
+ButtonCloseModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};

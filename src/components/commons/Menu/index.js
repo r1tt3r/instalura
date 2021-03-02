@@ -1,3 +1,4 @@
+import React from 'react';
 import { MenuWrapper } from './styles';
 import Logo from '../../../theme/Logo';
 import { Button } from '../Button';

@@ -1,39 +1,39 @@
-import { typographyVariants } from "./typographyVariants";
+import { typographyVariants } from './typographyVariants';
 
 export const colors = {
   background: {
     light: {
-      color: "#FFFFFF",
+      color: '#FFFFFF',
     },
     main: {
-      color: "#F2F2F2",
+      color: '#F2F2F2',
     },
   },
   borders: {
     main: {
-      color: "#F1F1F1",
+      color: '#F1F1F1',
     },
   },
   primary: {
     main: {
-      color: "#D7385E",
-      contrastText: "#fff",
+      color: '#D7385E',
+      contrastText: '#fff',
     },
   },
   secondary: {
     main: {
-      color: "#FB7B6B",
-      contrastText: "#fff",
+      color: '#FB7B6B',
+      contrastText: '#fff',
     },
   },
   tertiary: {
     main: {
-      color: "#070C0E",
-      contrastText: "#fff",
+      color: '#070C0E',
+      contrastText: '#fff',
     },
     light: {
-      color: "#88989E",
-      contrastText: "#fff",
+      color: '#88989E',
+      contrastText: '#fff',
     },
   },
   modes: {
@@ -52,7 +52,7 @@ export default {
   colors,
   typographyVariants,
   breakpoints,
-  borderRadius: "8px",
+  borderRadius: '8px',
   fontFamily: "'Rubik', sans-serif",
-  transition: "200ms ease-in-out",
+  transition: '200ms ease-in-out',
 };

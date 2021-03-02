@@ -54,14 +54,8 @@ function FormContent() {
         }
         throw new Error('Nao foi possivel cadastrar o usuario');
       })
-      .then((respConvert) => {
-        setSubmissionStatus(formState.DONE);
-        console.log(respConvert);
-      })
-      .catch((error) => {
-        setSubmissionStatus(formState.ERROR);
-        console.log(error);
-      });
+      .then(() => setSubmissionStatus(formState.DONE))
+      .catch(() => setSubmissionStatus(formState.ERROR));
   }
 
   const isFormInvalid =
@@ -185,6 +179,7 @@ export default function FormCadastro({ modalProps }) {
               right: '30px',
             }}
           >
+            {/* eslint-disable-next-line react/prop-types */}
             {modalProps.ButtonCloseModal}
           </div>
           <FormContent />
