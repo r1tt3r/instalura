@@ -10,7 +10,6 @@
     "commit": "cz"
   },
   "dependencies": {
-    "@commitlint/cli": "^12.0.1",
     "@crello/react-lottie": "^0.0.11",
     "framer-motion": "^3.7.0",
     "lodash": "^4.17.20",
@@ -24,6 +23,8 @@
     "styled-normalize": "^8.0.7"
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.0.1",
+    "@commitlint/config-conventional": "^12.0.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-styled-components": "^1.8.0",
     "cz-conventional-changelog": "3.3.0",
