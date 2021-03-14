@@ -2,9 +2,6 @@
 import Head from 'next/head';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ThemeProvider } from 'styled-components';
-import theme from '../src/theme';
-import GlobalStyle from '../src/theme/GlobalStyles';
 
 export default function App({ Component, pageProps }) {
   return (
