@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    'cypress/globals': true,
   },
   extends: [
     'eslint:recommended',
@@ -9,6 +10,7 @@ module.exports = {
     'airbnb',
     'eslint-config-prettier',
     'prettier/react',
+    'plugin:cypress/recommended',
   ],
   parser: 'babel-eslint',
   parserOptions: {
