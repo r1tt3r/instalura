@@ -1,24 +1,14 @@
 /// <reference types="cypress" />
 
-describe('/pages/app/login');
+describe('/pages/app/login', () => {
+  it('preencha os campos e va para pagina /app/profile', () => {
+    cy.visit('/app/login/');
 
-context('Window', () => {
-  beforeEach(() => {
-    cy.visit('https://example.cypress.io/commands/window');
-  });
+    cy.get('#formCadastro input[name="usuario"]').type('r1tt3r');
+    cy.get('#formCadastro input[name="senha"]').type('senhasegura');
 
-  it('cy.window() - get the global window object', () => {
-    // https://on.cypress.io/window
-    cy.window().should('have.property', 'top');
-  });
+    cy.get('#formCadastro button[type="submit"]').click();
 
-  it('cy.document() - get the document object', () => {
-    // https://on.cypress.io/document
-    cy.document().should('have.property', 'charset').and('eq', 'UTF-8');
-  });
-
-  it('cy.title() - get the title', () => {
-    // https://on.cypress.io/title
-    cy.title().should('include', 'Kitchen Sink');
+    cy.url().should('include', '/app/profile');
   });
 });
