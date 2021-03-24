@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -20,7 +21,13 @@ Input.defaultProps = {
   variant: 'paragraph1',
 };
 
-export default function TextField({ placeholder, name, onChange, value }) {
+export default function TextField({
+  placeholder,
+  name,
+  onChange,
+  value,
+  ...props
+}) {
   return (
     <InputWrapper>
       <Input
@@ -29,6 +36,7 @@ export default function TextField({ placeholder, name, onChange, value }) {
         name={name}
         onChange={onChange}
         value={value}
+        {...props}
       />
     </InputWrapper>
   );
