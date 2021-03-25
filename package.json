@@ -7,11 +7,13 @@
     "export": "next build && next export",
     "start": "next start",
     "lint": "eslint --ignore-path .gitignore .",
-    "commit": "cz"
+    "commit": "cz",
+    "test:integration:open": "cypress open"
   },
   "dependencies": {
     "@crello/react-lottie": "^0.0.11",
     "framer-motion": "^3.7.0",
+    "global": "^4.4.0",
     "lodash": "^4.17.20",
     "next": "latest",
     "prop-types": "^15.7.2",
@@ -27,10 +29,12 @@
     "@commitlint/config-conventional": "^12.0.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-styled-components": "^1.8.0",
+    "cypress": "^6.8.0",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.3.1",
