@@ -38,7 +38,7 @@ function FormContent() {
     event.preventDefault();
     setSubmissionStatus(formState.LOADING);
     setIsFormSubmited(true);
-    fetch('https://instalura-api.vercel.app/api/users', {
+    fetch('https://instalura-api-git-master-omariosouto.vercel.app/api/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
