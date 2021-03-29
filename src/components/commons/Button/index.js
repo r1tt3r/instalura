@@ -41,7 +41,8 @@ const ButtonWrapper = styled.button`
   ${propToStyle('display')}
   ${({ ghost }) => (ghost ? ButtonGhost : ButtonDefault)}
   &:hover,
-  &:focus {
+  &:focus,
+  &:disabled {
     opacity: 0.5;
   }
 `;

@@ -3,14 +3,15 @@ module.exports = {
     browser: true,
     es6: true,
     'cypress/globals': true,
+    'jest/globals': true,
   },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:cypress/recommended',
     'airbnb',
     'eslint-config-prettier',
     'prettier/react',
-    'plugin:cypress/recommended',
   ],
   parser: 'babel-eslint',
   parserOptions: {
@@ -29,4 +30,15 @@ module.exports = {
 
     'react/jsx-no-duplicate-props': ['error', { ignoreCase: false }],
   },
+  overrides: [
+    {
+      files: ['**/*.test.js'],
+      plugins: ['jest'],
+      env: {
+        jest: true,
+      },
+      // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+      ...require('eslint-plugin-jest').configs.recommended,
+    },
+  ],
 };
