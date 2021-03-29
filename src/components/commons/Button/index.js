@@ -28,6 +28,7 @@ const ButtonWrapper = styled.button`
   ${TextStyleVariantsMap.smallestException}
   transition: opacity ${({ theme }) => theme.transition};
   border-radius: ${({ theme }) => theme.borderRadius};
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'initial')};
   ${breakpointsMedia({
     xs: css`
       ${TextStyleVariantsMap.smallestException}

@@ -25,8 +25,7 @@ export default function LoginScreen() {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            marginTop="37px"
-            marginBottom="37px"
+            margin="37px 0 37px 0"
           >
             <Link href="/" color="secondary.main">
               <Logo size="large" />
