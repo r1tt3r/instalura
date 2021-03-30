@@ -14,7 +14,9 @@ async function HttpClient(url, { headers, body, ...options }) {
       return respostaDoServer.json();
     }
 
-    throw new Error('Falha em pegar os dados do servidor :(');
+    throw new Error(
+      'Falha em pegar os dados do servidor, por favor tente mais tarde.'
+    );
   });
 }
 

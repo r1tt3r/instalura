@@ -5,6 +5,7 @@ export function useForm({ initialValues, onSubmit, validateSchema }) {
   const [isFormDisabled, setIsFormDisabled] = React.useState(true);
   const [errors, setErrors] = React.useState({});
   const [touched, setTouched] = React.useState({});
+  const [isFormLoading, setIsFormLoading] = React.useState(false);
 
   React.useEffect(() => {
     validateSchema(values)
@@ -50,6 +51,9 @@ export function useForm({ initialValues, onSubmit, validateSchema }) {
     },
     touched,
     isFormDisabled,
+    setIsFormDisabled,
+    isFormLoading,
+    setIsFormLoading,
     validateSchema,
     errors,
   };
