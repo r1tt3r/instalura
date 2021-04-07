@@ -1,5 +1,17 @@
 import React from 'react';
 
+function formatErrors(yupErrorsInner = []) {
+  return yupErrorsInner.reduce((accValue, currentValue) => {
+    const currentName = currentValue.path;
+    const currentMsg = currentValue.message;
+
+    return {
+      ...accValue,
+      [currentName]: currentMsg,
+    };
+  }, {});
+}
+
 export function useForm({ initialValues, onSubmit, validateSchema }) {
   const [values, setValues] = React.useState(initialValues);
   const [isFormDisabled, setIsFormDisabled] = React.useState(true);
@@ -7,25 +19,22 @@ export function useForm({ initialValues, onSubmit, validateSchema }) {
   const [touched, setTouched] = React.useState({});
   const [isFormLoading, setIsFormLoading] = React.useState(false);
 
-  React.useEffect(() => {
-    validateSchema(values)
-      .then(() => {
-        setIsFormDisabled(false);
-        setErrors({});
-      })
-      .catch((error) => {
-        const currentErrors = error.inner.reduce((accValue, currentValue) => {
-          const currentName = currentValue.path;
-          const currentMsg = currentValue.message;
+  async function validateValues(currentValues) {
+    try {
+      await validateSchema(currentValues);
+      setIsFormDisabled(false);
+      setErrors({});
+    } catch (err) {
+      const currentErrors = formatErrors(err.inner);
+      setErrors(currentErrors);
+      setIsFormDisabled(true);
+    }
+  }
 
-          return {
-            ...accValue,
-            [currentName]: currentMsg,
-          };
-        }, {});
-        setErrors(currentErrors);
-        setIsFormDisabled(true);
-      });
+  React.useEffect(() => {
+    validateValues(values).catch((err) => {
+      console.log(err);
+    });
   }, [values]);
 
   return {
