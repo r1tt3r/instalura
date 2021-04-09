@@ -6,6 +6,7 @@ import styled, { css } from 'styled-components';
 import { propToStyle } from '../../../theme/utils/propToStyle';
 import { breakpointsMedia } from '../../../theme/utils/breakpointsMedia';
 import Link from '../../commons/Link';
+import { WebsitePageContext } from '../../wrappers/WebsitePage/context';
 
 export const TextStyleVariantsMap = {
   paragraph1: css`
@@ -50,25 +51,31 @@ const TextBase = styled.span`
   ${propToStyle('fontWeight')}
 `;
 
-export default function Text({ tag, variant, children, href, ...props }) {
+export default function Text({
+  tag,
+  variant,
+  children,
+  href,
+  cmsKey,
+  ...props
+}) {
+  const websitePageContext = React.useContext(WebsitePageContext);
+
+  const componentContent = cmsKey
+    ? websitePageContext.getCMSContent(cmsKey)
+    : children;
+
   if (href) {
     return (
       <TextBase href={href} as={Link} variant={variant} {...props}>
-        {children}
+        {componentContent}
       </TextBase>
     );
   }
 
   return (
-    <TextBase
-      as={tag}
-      variant={variant}
-      {...props}
-      // style
-      // className
-      // e ai vai
-    >
-      {children}
+    <TextBase as={tag} variant={variant} {...props}>
+      {componentContent}
     </TextBase>
   );
 }
@@ -78,6 +85,7 @@ Text.propTypes = {
   variant: PropTypes.string,
   children: PropTypes.node,
   href: PropTypes.string,
+  cmsKey: PropTypes.string,
 };
 
 Text.defaultProps = {
@@ -85,4 +93,5 @@ Text.defaultProps = {
   variant: 'paragraph1',
   children: null,
   href: '',
+  cmsKey: undefined,
 };
