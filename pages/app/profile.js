@@ -2,13 +2,13 @@ import React from 'react';
 import { authService } from '../../src/services/auth/authService';
 import { useUserService } from '../../src/services/user/hook';
 
-export default function ProfilePage({ user }) {
+export default function ProfilePage() {
   const dados = useUserService.getProfilePage();
+  console.log(dados);
 
   return (
     <div>
       Página de Profile!
-      {JSON.stringify(user, null, 4)}
       <img
         src="https://media.giphy.com/media/bn0zlGb4LOyo8/giphy.gif"
         alt="Nicolas Cage"
