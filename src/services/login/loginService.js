@@ -1,24 +1,8 @@
 import { setCookie, destroyCookie } from 'nookies';
 import { isStagingEnv } from '../../infra/env/isStagingEnv';
+import { HttpClient } from '../../infra/http/HttpClient';
 
-async function HttpClient(url, { headers, body, ...options }) {
-  return fetch(url, {
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-    ...options,
-  }).then((respostaDoServer) => {
-    if (respostaDoServer.ok) {
-      return respostaDoServer.json();
-    }
-
-    throw new Error(
-      'Falha em pegar os dados do servidor, por favor tente mais tarde.'
-    );
-  });
-}
+export const APP_TOKEN = 'APP_TOKEN';
 
 const BASE_URL = isStagingEnv
   ? 'https://instalura-api-git-master-omariosouto.vercel.app'
@@ -36,7 +20,7 @@ export const loginService = {
       const { token } = respostaConvertida.data;
       const DAY_IN_SECONDS = 86400;
 
-      setCookie(null, 'APP_TOKEN', token, {
+      setCookie(null, APP_TOKEN, token, {
         path: '/',
         maxAge: DAY_IN_SECONDS * 7,
       });
@@ -46,7 +30,7 @@ export const loginService = {
       };
     });
   },
-  logout() {
-    destroyCookie(null, 'APP_TOKEN');
+  async logout(ctx, destroyCookieModule = destroyCookie) {
+    destroyCookieModule(ctx, APP_TOKEN, { path: '/' });
   },
 };
