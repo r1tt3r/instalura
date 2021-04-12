@@ -18,9 +18,6 @@ export const userService = {
       });
 
       return {
-        user: {
-          totalLikes: 100,
-        },
         posts: response.data,
       };
     } catch (err) {
