@@ -44,7 +44,7 @@ export default function LoginScreen() {
               color="secondary.main"
               onClick={(event) => {
                 event.preventDefault();
-                websitePageContext.toggleModalCadastro();
+                websitePageContext.toggleModal();
               }}
             >
               Cadastre-se

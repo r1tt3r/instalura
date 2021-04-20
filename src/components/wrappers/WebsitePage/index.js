@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import get from 'lodash/get';
@@ -7,8 +8,10 @@ import Menu from '../../commons/Menu';
 import Modal from '../../commons/Modal';
 import { Box } from '../../foundation/layout/Box';
 import FormCadastro from '../../patterns/FormCadastro';
+import FormPhotoUpload from '../../patterns/FormPhotoUpload';
 import { SEO } from '../../commons/SEO';
 import { WebsitePageContext } from './context';
+import MenuLoggedArea from '../../commons/MenuLoggedArea';
 
 export { WebsitePageContext } from './context';
 
@@ -18,13 +21,42 @@ export default function WebsitePageWrapper({
   pageBoxProps,
   menuProps,
   messages,
+  layoutProps,
 }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  if (layoutProps?.loggedIn) {
+    return (
+      <WebsitePageContext.Provider
+        value={{
+          toggleModal: () => {
+            setIsModalOpen(!isModalOpen);
+          },
+        }}
+      >
+        <SEO {...seoProps} />
+        <Box
+          flex="1"
+          display="flex"
+          flexWrap="wrap"
+          backgroundColor="#E5E5E5"
+          flexDirection="column"
+          {...pageBoxProps}
+        >
+          <MenuLoggedArea />
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            {(modalProps) => <FormPhotoUpload modalProps={modalProps} />}
+          </Modal>
+          {children}
+        </Box>
+      </WebsitePageContext.Provider>
+    );
+  }
 
   return (
     <WebsitePageContext.Provider
       value={{
-        toggleModalCadastro: () => {
+        toggleModal: () => {
           setIsModalOpen(!isModalOpen);
         },
         getCMSContent: (cmsKey) => get(messages, cmsKey),
@@ -66,6 +98,9 @@ WebsitePageWrapper.defaultProps = {
     display: true,
   },
   messages: {},
+  layoutProps: {
+    layoutProps: false,
+  },
 };
 
 WebsitePageWrapper.propTypes = {
@@ -81,6 +116,6 @@ WebsitePageWrapper.propTypes = {
     backgroundPosition: PropTypes.string,
   }),
   children: PropTypes.node.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   messages: PropTypes.object,
+  layoutProps: PropTypes.object,
 };

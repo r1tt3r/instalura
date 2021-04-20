@@ -18,4 +18,7 @@ module.exports = {
       },
     ];
   },
+  images: {
+    domains: ['github.com', 'unavatar.now.sh'],
+  },
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
 export const WebsitePageContext = React.createContext({
-  toggleModalCadastro: () => {},
+  toggleModal: () => {},
   getCMSContent: (cmsKey) => cmsKey,
 });

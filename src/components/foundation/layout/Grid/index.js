@@ -4,16 +4,16 @@ import { propToStyle } from '../../../../theme/utils/propToStyle';
 
 const Container = styled.div`
   width: 100%;
-  padding-right: 28px;
-  padding-left: 28px;
+  padding-right: 16px;
+  padding-left: 16px;
   margin-right: auto;
   margin-left: auto;
   ${breakpointsMedia({
     xs: css`
       max-width: initial;
 
-      padding-right: 28px;
-      padding-left: 28px;
+      padding-right: 16px;
+      padding-left: 16px;
     `,
     sm: css`
       max-width: 576px;
@@ -124,6 +124,9 @@ const Col = styled.div`
   ${propToStyle('flexDirection')}
   ${propToStyle('paddingRight')}
   ${propToStyle('order')}
+  ${propToStyle('padding')}
+  ${propToStyle('paddingTop')}
+  ${propToStyle('margin')}
 `;
 
 const Row = styled.div`
@@ -132,10 +135,14 @@ const Row = styled.div`
   margin-right: -16px;
   margin-left: -16px;
   ${propToStyle('flex')}
+  ${propToStyle('margin')}
   ${propToStyle('marginLeft')}
   ${propToStyle('marginRight')}
   ${propToStyle('marginTop')}
   ${propToStyle('marginBottom')}
+  ${propToStyle('paddingLeft')}
+  ${propToStyle('paddingRight')}
+  ${propToStyle('marginTop')}
   ${propToStyle('justifyContent')}
   ${propToStyle('flexDirection')}
 `;
