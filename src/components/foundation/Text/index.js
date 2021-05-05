@@ -16,6 +16,13 @@ export const TextStyleVariantsMap = {
     line-height: ${({ theme }) =>
       theme.typographyVariants.paragraph1.lineHeight};
   `,
+  paragraph2: css`
+    font-size: ${({ theme }) => theme.typographyVariants.paragraph2.fontSize};
+    font-weight: ${({ theme }) =>
+      theme.typographyVariants.paragraph2.fontWeight};
+    line-height: ${({ theme }) =>
+      theme.typographyVariants.paragraph2.lineHeight};
+  `,
   smallestException: css`
     font-size: ${({ theme }) =>
       theme.typographyVariants.smallestException.fontSize};
@@ -51,6 +58,7 @@ const TextBase = styled.span`
   ${propToStyle('margin')}
   ${propToStyle('fontWeight')}
   ${propToStyle('fontSize')}
+  ${propToStyle('color')}
 `;
 
 export default function Text({

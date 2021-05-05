@@ -17,3 +17,19 @@ export const ProfileAvatar = styled.div`
     `,
   })}
 `;
+
+export const ImageContainer = styled.div`
+  width: 100%;
+  position: relative;
+
+  div:nth-child(2) {
+    position: unset !important;
+  }
+
+  img {
+    object-fit: contain;
+    width: 100% !important;
+    position: relative !important;
+    height: unset !important;
+  }
+`;

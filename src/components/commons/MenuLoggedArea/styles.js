@@ -20,6 +20,7 @@ export const MenuWrapper = styled.nav`
       left: 0;
       box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.04);
       border-radius: 24px 24px 0px 0px;
+      z-index: 10;
     `,
     md: css`
       position: unset;

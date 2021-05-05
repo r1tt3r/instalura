@@ -6,7 +6,7 @@ import styled, { css, createGlobalStyle } from 'styled-components';
 const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: ${({ animation }) => animation.alignItems};
   background: rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
@@ -29,6 +29,7 @@ const ModalWrapper = styled.div`
       pointer-events: none;
     `;
   }}
+  justify-content: center;
 `;
 
 const LockScroll = createGlobalStyle`
@@ -56,34 +57,28 @@ function ButtonCloseModal({ onClose }) {
   );
 }
 
-export default function Modal({ isOpen, onClose, children }) {
+export default function Modal({ isOpen, onClose, animation, children }) {
   return (
     <ModalWrapper
-      onClick={(event) => {
-        const safeArea = event.target.closest('[data-modal-safe-area="true"]');
-        if (!safeArea) {
-          onClose();
-        }
-      }}
+      animation={animation}
+      // onClick={(event) => {
+      //   const safeArea = event.target.closest('[data-modal-safe-area="true"]');
+      //   if (!safeArea) {
+      //     onClose();
+      //   }
+      // }}
       isOpen={isOpen}
     >
       {isOpen && <LockScroll />}
       <motion.div
-        variants={{
-          open: {
-            x: '0',
-          },
-          closed: {
-            x: '100%',
-          },
-        }}
+        variants={animation.variants}
         animate={isOpen ? 'open' : 'closed'}
         transition={{
           duration: '0.6',
         }}
         style={{
           display: 'flex',
-          flex: 1,
+          flex: animation.flex,
         }}
       >
         {children({
@@ -99,6 +94,12 @@ Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
+  animation: PropTypes.shape({
+    // eslint-disable-next-line react/forbid-prop-types
+    variants: PropTypes.object,
+    // eslint-disable-next-line react/forbid-prop-types
+    flex: PropTypes.any,
+  }).isRequired,
 };
 
 ButtonCloseModal.propTypes = {

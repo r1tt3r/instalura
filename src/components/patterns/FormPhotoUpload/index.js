@@ -1,115 +1,198 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import * as yup from 'yup';
-// import { Lottie } from '@crello/react-lottie';
+import Flickity from 'react-flickity-component';
+import { Lottie } from '@crello/react-lottie';
 
 import { Button } from '../../commons/Button';
 import TextField from '../../forms/TextField';
-import { loginService } from '../../../services/login/loginService';
 import { useForm } from '../../../infra/hooks/forms/useForm';
 import Text from '../../foundation/Text';
 import { Box } from '../../foundation/layout/Box';
+import { BoxForm, BoxPhoto, PhotoSkeleto, Figure, filterList } from './styles';
+import loadingAnimation from './animations/loading.json';
+import { photoService } from '../../../services/photo/photoService';
+import { WebsitePageContext } from '../../wrappers/WebsitePage/context';
 
-const loginSchema = yup.object().shape({
-  usuario: yup
+const URL = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
+const photoSchema = yup.object().shape({
+  imageUrl: yup
     .string()
-    .required('"Usuário" é obrigatório')
-    .min(3, 'Preencha ao menos 3 caracteres'),
-  senha: yup
-    .string()
-    .required('"Senha" é obrigatório')
-    .min('8', 'Preencha ao menos 8 caracteres'),
+    .matches(URL, 'Insira uma URL válida')
+    .required('"URL" é obrigatório'),
 });
 
-export default function FormPhotoUpload() {
-  const router = useRouter();
+const flickityOptions = {
+  initialIndex: 2,
+  groupCells: true,
+};
+
+export default function FormPhotoUpload({ modalProps }) {
+  const websitePageContext = React.useContext(WebsitePageContext);
+  const [step, setStep] = React.useState(1);
+  const [currentFilter, setCurrentFilter] = React.useState('');
   const initialValues = {
-    usuario: '',
-    senha: '',
+    imageUrl: '',
+    filter: '',
   };
-  const [hasErrors, setHasErros] = React.useState({
-    status: false,
-    message: '',
-  });
 
   const form = useForm({
     initialValues,
-    onSubmit: (values) => {
+    async onSubmit() {
       form.setIsFormDisabled(true);
       form.setIsFormLoading(true);
-      loginService
-        .login({
-          username: values.usuario,
-          password: values.senha,
+
+      await photoService
+        .photo({
+          photoUrl: form.values.imageUrl,
+          filter: currentFilter,
         })
         .then(() => {
-          router.push('/app/profile');
+          websitePageContext.toggleModal();
+          setStep(1);
         })
-        .catch((err) =>
-          setHasErros({ ...hasErrors, status: true, message: err })
-        )
+        .catch((err) => console.error(err.message, 'Error posting image'))
         .finally(() => {
           form.setIsFormDisabled(false);
           form.setIsFormLoading(false);
+          websitePageContext.setProfileData();
         });
     },
     async validateSchema(values) {
-      return loginSchema.validate(values, { abortEarly: false });
+      return photoSchema.validate(values, { abortEarly: false });
     },
   });
 
   return (
-    <form id="formPhotoUpload" onSubmit={form.handleSubmit}>
-      {hasErrors.status && (
-        <Text tag="p" margin="0 0 20px 0" color="error.main">
-          {String(hasErrors.message).replace('Error: ', '')}
-        </Text>
-      )}
-      <TextField
-        placeholder="Usuário"
-        name="usuario"
-        value={form.values.usuario}
-        error={form.errors.usuario}
-        onBlur={form.handleBlur}
-        onChange={form.handleChange}
-        isTouched={form.touched.usuario}
-      />
-      <TextField
-        placeholder="Senha"
-        name="senha"
-        type="password"
-        value={form.values.senha}
-        error={form.errors.senha}
-        onBlur={form.handleBlur}
-        onChange={form.handleChange}
-        isTouched={form.touched.senha}
-      />
-      <Button
-        type="submit"
-        variant="primary.main"
-        margin={{
-          xs: '0 auto',
-          md: 'initial',
-        }}
-        fullWidth
-        disabled={form.isFormDisabled}
-      >
-        {form.isFormLoading ? (
-          <Box margin="auto" width="100px">
-            {/* <Lottie
-              width="100px"
-              height="20px"
-              config={{
-                animationData: loadingAnimation,
-                loop: true,
-                autoplay: true,
-              }}
-            /> */}
-          </Box>
-        ) : (
-          'Entrar'
-        )}
-      </Button>
-    </form>
+    <BoxForm>
+      <Box {...modalProps}>
+        <Box textAlign="right" padding="20px">
+          {modalProps.ButtonCloseModal}
+        </Box>
+        <form onSubmit={form.handleSubmit}>
+          {step === 1 && (
+            <Box>
+              <BoxPhoto>{PhotoSkeleto}</BoxPhoto>
+              <Box padding="24px">
+                <TextField
+                  placeholder="URL da imagem"
+                  name="imageUrl"
+                  value={form.values.imageUrl}
+                  error={form.errors.imageUrl}
+                  onBlur={form.handleBlur}
+                  onChange={form.handleChange}
+                  isTouched={form.touched.imageUrl}
+                />
+                <Text
+                  tag="p"
+                  variant="paragraph2"
+                  textAlign="center"
+                  color="#88989E"
+                >
+                  Formatos suportados: jpg, png, svg e xpto.
+                </Text>
+
+                <Button
+                  type="submit"
+                  variant="primary.main"
+                  margin={{
+                    xs: '0 auto',
+                    md: 'initial',
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setStep(2);
+                  }}
+                  fullWidth
+                  disabled={form.isFormDisabled}
+                >
+                  Avançar
+                </Button>
+              </Box>
+            </Box>
+          )}
+
+          {step === 2 && (
+            <Box>
+              <BoxPhoto>
+                <figure className={currentFilter}>
+                  <img
+                    alt="Post"
+                    src={form.values.imageUrl}
+                    width="350px"
+                    height="350px"
+                  />
+                </figure>
+              </BoxPhoto>
+              <Box padding="24px 0 0 24px">
+                <Flickity
+                  className="carousel"
+                  groupCells
+                  options={flickityOptions}
+                  static
+                >
+                  {filterList.map((filter) => (
+                    <Box
+                      key={filter.filter}
+                      onClick={() => setCurrentFilter(filter.filter)}
+                    >
+                      <Figure className={filter.filter} key={filter.filter}>
+                        <img
+                          alt="Post"
+                          src={form.values.imageUrl}
+                          width="88px"
+                          height="88px"
+                        />
+                      </Figure>
+                      <Text
+                        tag="p"
+                        textAlign="center"
+                        variant="smallestException"
+                      >
+                        {filter.name}
+                      </Text>
+                    </Box>
+                  ))}
+                </Flickity>
+              </Box>
+              <Box padding="0 24px 24px 24px">
+                <Button
+                  type="submit"
+                  variant="primary.main"
+                  margin={{
+                    xs: '0 auto',
+                    md: 'initial',
+                  }}
+                  fullWidth
+                  disabled={form.isFormDisabled}
+                >
+                  {form.isFormLoading ? (
+                    <Box margin="auto" width="100px">
+                      <Lottie
+                        width="100px"
+                        height="20px"
+                        config={{
+                          animationData: loadingAnimation,
+                          loop: true,
+                          autoplay: true,
+                        }}
+                      />
+                    </Box>
+                  ) : (
+                    'Postar'
+                  )}
+                </Button>
+              </Box>
+            </Box>
+          )}
+        </form>
+      </Box>
+    </BoxForm>
   );
 }
+
+FormPhotoUpload.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  modalProps: PropTypes.any.isRequired,
+};

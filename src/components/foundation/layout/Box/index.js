@@ -3,6 +3,7 @@ import { propToStyle } from '../../../../theme/utils/propToStyle';
 
 export const Box = styled.div`
   ${propToStyle('display')}
+  ${propToStyle('position')}
   ${propToStyle('flexDirection')}
   ${propToStyle('justifyContent')}
   ${propToStyle('flex')}
@@ -19,4 +20,7 @@ export const Box = styled.div`
   ${propToStyle('margin')}
   ${propToStyle('marginBottom')}
   ${propToStyle('width')}
+  ${propToStyle('height')}
+  ${propToStyle('minHeight')}
+  ${propToStyle('textAlign')}
 `;

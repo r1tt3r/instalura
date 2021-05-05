@@ -1,13 +1,23 @@
 import React from 'react';
-import { useUserService } from '../../../services/user/hook';
 import Image from '../../commons/Image';
+import PhotoLike from '../../commons/PhotoLike';
 import { Box } from '../../foundation/layout/Box';
 import { Grid } from '../../foundation/layout/Grid';
 import Text from '../../foundation/Text';
-import { ProfileAvatar } from './styles';
+import { WebsitePageContext } from '../../wrappers/WebsitePage';
+import { ProfileAvatar, ImageContainer } from './styles';
 
 export default function ProfileScreen() {
-  const dados = useUserService.getProfilePage();
+  const websitePageContext = React.useContext(WebsitePageContext);
+  const [postsData, setPostsData] = React.useState([]);
+
+  React.useEffect(() => {
+    websitePageContext.setProfileData();
+  }, []);
+
+  React.useEffect(() => {
+    setPostsData(websitePageContext.getProfileData());
+  }, [websitePageContext.getProfileData()]);
 
   return (
     <Box paddingTop="50px" backgroundColor="#fff">
@@ -33,7 +43,7 @@ export default function ProfileScreen() {
                     color="tertiary.main"
                     fontSize={{ md: '24px', xs: '16px' }}
                   >
-                    22K
+                    234
                   </Text>
                   <Text
                     variant="paragraph1"
@@ -56,26 +66,7 @@ export default function ProfileScreen() {
                     color="tertiary.main"
                     fontSize={{ md: '24px', xs: '16px' }}
                   >
-                    22K
-                  </Text>
-                  <Text
-                    variant="paragraph1"
-                    color="tertiary.light"
-                    marginTop="8px"
-                    fontSize={{ md: '16px', xs: '12px' }}
-                  >
-                    Seguidores
-                  </Text>
-                </Box>
-              </Grid.Col>
-              <Grid.Col value={{ xs: 3, md: 3 }} padding={{ xs: '0' }}>
-                <Box display="flex" flexDirection="column">
-                  <Text
-                    variant="titleXS"
-                    color="tertiary.main"
-                    fontSize={{ md: '24px', xs: '16px' }}
-                  >
-                    22K
+                    22k
                   </Text>
                   <Text
                     variant="paragraph1"
@@ -87,23 +78,51 @@ export default function ProfileScreen() {
                   </Text>
                 </Box>
               </Grid.Col>
+              <Grid.Col value={{ xs: 3, md: 3 }} padding={{ xs: '0' }}>
+                <Box display="flex" flexDirection="column">
+                  <Text
+                    variant="titleXS"
+                    color="tertiary.main"
+                    fontSize={{ md: '24px', xs: '16px' }}
+                  >
+                    134k
+                  </Text>
+                  <Text
+                    variant="paragraph1"
+                    color="tertiary.light"
+                    marginTop="8px"
+                    fontSize={{ md: '16px', xs: '12px' }}
+                  >
+                    Seguidores
+                  </Text>
+                </Box>
+              </Grid.Col>
+            </Grid.Row>
+            <Grid.Row>
+              <Box
+                display="flex"
+                flexDirection="column"
+                paddingTop={{ md: '32px', xs: '15px' }}
+              >
+                <Text
+                  variant="titleXS"
+                  color="tertiary.main"
+                  fontSize={{ md: '24px', xs: '16px' }}
+                >
+                  Nicolas Cage
+                </Text>
+                <Text
+                  fontSize={{ xs: '14px', md: '16px' }}
+                  color="#88989E"
+                  marginTop="8px"
+                >
+                  A wholesome person responsible for the best movies ever.
+                </Text>
+              </Box>
             </Grid.Row>
           </Grid.Col>
         </Grid.Row>
-        <Grid.Row>
-          <Box display="flex" flexDirection="column" paddingTop="32px">
-            <Text
-              variant="titleXS"
-              color="tertiary.main"
-              fontSize={{ md: '24px', xs: '16px' }}
-            >
-              Nicolas Cage
-            </Text>
-            <Text variant="paragraph1" color="tertiary.light" marginTop="8px">
-              A wholesome person responsible for the best movies ever.
-            </Text>
-          </Box>
-        </Grid.Row>
+
         <Grid.Row
           marginTop={{ md: '72px', xs: '17px' }}
           margin="auto"
@@ -112,23 +131,22 @@ export default function ProfileScreen() {
         >
           <Grid.Col>
             <Grid.Row>
-              {dados.data &&
-                dados.data.posts.map((post) => (
-                  <Grid.Col
-                    key={post.createdAt}
-                    value={{ md: 4, xs: 4 }}
-                    padding={{ xs: '5px' }}
-                  >
-                    <Box marginBottom="15px">
-                      <Image
-                        src={post.photoUrl}
-                        alt={post.description}
-                        width="285"
-                        height="285"
-                      />
-                    </Box>
-                  </Grid.Col>
-                ))}
+              {postsData?.map((post) => (
+                <Grid.Col
+                  key={post.createdAt}
+                  value={{ md: 4, xs: 4 }}
+                  padding={{ xs: '5px' }}
+                >
+                  <ImageContainer marginBottom="15px" position="relative">
+                    <PhotoLike post={post} />
+                    <Image
+                      src={post.photoUrl}
+                      alt={post.description}
+                      layout="fill"
+                    />
+                  </ImageContainer>
+                </Grid.Col>
+              ))}
             </Grid.Row>
           </Grid.Col>
         </Grid.Row>

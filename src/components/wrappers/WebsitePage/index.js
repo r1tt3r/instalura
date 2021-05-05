@@ -12,6 +12,7 @@ import FormPhotoUpload from '../../patterns/FormPhotoUpload';
 import { SEO } from '../../commons/SEO';
 import { WebsitePageContext } from './context';
 import MenuLoggedArea from '../../commons/MenuLoggedArea';
+import { userService } from '../../../services/user/userService';
 
 export { WebsitePageContext } from './context';
 
@@ -24,6 +25,34 @@ export default function WebsitePageWrapper({
   layoutProps,
 }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [profilePhotos, setProfilePhotos] = React.useState([]);
+  const animation = {
+    photoUpload: {
+      initial: { scale: 0 },
+      variants: {
+        open: {
+          scale: 1,
+        },
+        closed: {
+          scale: 0,
+        },
+      },
+      alignItems: 'center',
+      flex: 'initial',
+    },
+    cadastro: {
+      variants: {
+        open: {
+          x: '0',
+        },
+        closed: {
+          x: '100%',
+        },
+      },
+      alignItems: 'stretch',
+      flex: 1,
+    },
+  };
 
   if (layoutProps?.loggedIn) {
     return (
@@ -31,6 +60,16 @@ export default function WebsitePageWrapper({
         value={{
           toggleModal: () => {
             setIsModalOpen(!isModalOpen);
+          },
+          getProfileData: () => profilePhotos,
+          async setProfileData() {
+            const photoData = await userService.getProfilePage();
+            if (photoData.posts) {
+              const orderPosts = photoData.posts.sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+              );
+              setProfilePhotos(orderPosts);
+            }
           },
         }}
       >
@@ -44,7 +83,11 @@ export default function WebsitePageWrapper({
           {...pageBoxProps}
         >
           <MenuLoggedArea />
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            animation={animation.photoUpload}
+          >
             {(modalProps) => <FormPhotoUpload modalProps={modalProps} />}
           </Modal>
           {children}
@@ -71,7 +114,11 @@ export default function WebsitePageWrapper({
         flexDirection="column"
         {...pageBoxProps}
       >
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          animation={animation.cadastro}
+        >
           {(modalProps) => <FormCadastro modalProps={modalProps} />}
         </Modal>
 

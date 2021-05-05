@@ -19,6 +19,15 @@ module.exports = {
     ];
   },
   images: {
-    domains: ['github.com', 'unavatar.now.sh'],
+    domains: [
+      'github.com',
+      'unavatar.now.sh',
+      'source.unsplash.com',
+      'avatars.githubusercontent.com',
+      'news.cgtn.com',
+      '1.bp.blogspot.com',
+      'i.ytimg.com',
+      'i.pinimg.com',
+    ],
   },
 };
