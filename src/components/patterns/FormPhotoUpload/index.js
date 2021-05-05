@@ -70,7 +70,7 @@ export default function FormPhotoUpload({ modalProps }) {
         <Box textAlign="right" padding="20px">
           {modalProps.ButtonCloseModal}
         </Box>
-        <form onSubmit={form.handleSubmit}>
+        <form onSubmit={form.handleSubmit} id="photoUpload">
           {step === 1 && (
             <Box>
               <BoxPhoto>{PhotoSkeleto}</BoxPhoto>
@@ -96,6 +96,7 @@ export default function FormPhotoUpload({ modalProps }) {
                 <Button
                   type="submit"
                   variant="primary.main"
+                  id="nextStep"
                   margin={{
                     xs: '0 auto',
                     md: 'initial',
@@ -115,7 +116,7 @@ export default function FormPhotoUpload({ modalProps }) {
 
           {step === 2 && (
             <Box>
-              <BoxPhoto>
+              <BoxPhoto id="postPreview">
                 <figure className={currentFilter}>
                   <img
                     alt="Post"
@@ -159,6 +160,7 @@ export default function FormPhotoUpload({ modalProps }) {
               <Box padding="0 24px 24px 24px">
                 <Button
                   type="submit"
+                  id="makePost"
                   variant="primary.main"
                   margin={{
                     xs: '0 auto',

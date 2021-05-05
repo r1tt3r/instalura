@@ -125,21 +125,28 @@ export default function ProfileScreen() {
 
         <Grid.Row
           marginTop={{ md: '72px', xs: '17px' }}
+          marginBottom={{ md: '72px', xs: '17px' }}
           margin="auto"
           paddingLeft={{ md: '10%', xs: 'initial' }}
           paddingRight={{ md: '10%', xs: 'initial' }}
         >
           <Grid.Col>
-            <Grid.Row>
+            <Grid.Row id="profilePhotoList">
               {postsData?.map((post) => (
                 <Grid.Col
+                  className="profileImage"
                   key={post.createdAt}
                   value={{ md: 4, xs: 4 }}
                   padding={{ xs: '5px' }}
                 >
-                  <ImageContainer marginBottom="15px" position="relative">
+                  <ImageContainer
+                    className="imageContainer"
+                    marginBottom="15px"
+                    position="relative"
+                  >
                     <PhotoLike post={post} />
                     <Image
+                      filter={post.filter}
                       src={post.photoUrl}
                       alt={post.description}
                       layout="fill"
