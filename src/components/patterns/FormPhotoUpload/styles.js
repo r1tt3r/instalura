@@ -57,6 +57,10 @@ export const PhotoSkeleto = (
 
 export const filterList = [
   {
+    name: 'Original',
+    filter: '',
+  },
+  {
     name: '1977',
     filter: 'filter-1977',
   },

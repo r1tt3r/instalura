@@ -56,6 +56,8 @@ export default function FormPhotoUpload({ modalProps }) {
         .finally(() => {
           form.setIsFormDisabled(false);
           form.setIsFormLoading(false);
+          form.setValues({ ...form.values, imageUrl: '' });
+          form.setTouched({ ...form.touched, imageUrl: false });
           websitePageContext.setProfileData();
         });
     },

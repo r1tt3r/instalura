@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import LoginScreenPageObject from '../../../../src/components/screens/app/LoginScreen/LoginScreen.pageObject';
-import ProfileScreenPageObject from '../../../../src/components/screens/ProfileScreen/ProfileScreen.pageObject';
+import ProfileScreenPageObject from '../../../../src/components/screens/app/ProfileScreen/ProfileScreen.pageObject';
 
 describe('/pages/app/login', () => {
   describe('when fill and submit a form login request', () => {

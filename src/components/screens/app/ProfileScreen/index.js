@@ -1,10 +1,10 @@
 import React from 'react';
-import Image from '../../commons/Image';
-import PhotoLike from '../../commons/PhotoLike';
-import { Box } from '../../foundation/layout/Box';
-import { Grid } from '../../foundation/layout/Grid';
-import Text from '../../foundation/Text';
-import { WebsitePageContext } from '../../wrappers/WebsitePage';
+import Image from '../../../commons/Image';
+import PhotoLike from '../../../commons/PhotoLike';
+import { Box } from '../../../foundation/layout/Box';
+import { Grid } from '../../../foundation/layout/Grid';
+import Text from '../../../foundation/Text';
+import { WebsitePageContext } from '../../../wrappers/WebsitePage';
 import { ProfileAvatar, ImageContainer } from './styles';
 
 export default function ProfileScreen() {
