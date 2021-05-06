@@ -1,4 +1,4 @@
-import ProfileScreen from '../../src/components/screens/ProfileScreen';
+import ProfileScreen from '../../src/components/screens/app/ProfileScreen';
 import websitePageHOC from '../../src/components/wrappers/WebsitePage/hoc';
 import { authService } from '../../src/services/auth/authService';
 
@@ -19,11 +19,10 @@ export async function getServerSideProps(ctx) {
   const hasActiveSession = await auth.hasActiveSession();
   if (hasActiveSession) {
     const session = await auth.getSession();
-    // const profilePage = await userService.getProfilePage(ctx);
+
     return {
       props: {
         user: session,
-        // posts: profilePage.posts,
       },
     };
   }
