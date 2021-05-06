@@ -7,8 +7,13 @@ export async function HttpClient(url, { headers, body, ...options }) {
     body: JSON.stringify(body),
     ...options,
   }).then((respostaDoServer) => {
+    const contentType = respostaDoServer.headers.get('content-type');
+
     if (respostaDoServer.ok) {
-      return respostaDoServer.json();
+      if (contentType !== null) {
+        return respostaDoServer.json();
+      }
+      return respostaDoServer.text();
     }
 
     throw new Error(

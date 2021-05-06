@@ -30,6 +30,7 @@ export function useForm({ initialValues, onSubmit, validateSchema }) {
 
   return {
     values,
+    setValues,
     handleSubmit(e) {
       e.preventDefault();
       onSubmit(values);
@@ -50,6 +51,7 @@ export function useForm({ initialValues, onSubmit, validateSchema }) {
       });
     },
     touched,
+    setTouched,
     isFormDisabled,
     setIsFormDisabled,
     isFormLoading,

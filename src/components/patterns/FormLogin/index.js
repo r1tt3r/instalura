@@ -5,7 +5,7 @@ import { Lottie } from '@crello/react-lottie';
 
 import { Button } from '../../commons/Button';
 import TextField from '../../forms/TextField';
-import { loginService } from '../../../services/login/loginService';
+import loginService from '../../../services/login/loginService';
 import { useForm } from '../../../infra/hooks/forms/useForm';
 import Text from '../../foundation/Text';
 import loadingAnimation from './animations/loading.json';

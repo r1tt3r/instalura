@@ -55,7 +55,7 @@ export default function HomeScreen() {
               md: 'initial',
             }}
             display="block"
-            onClick={() => websitePageContext.toggleModalCadastro()}
+            onClick={() => websitePageContext.toggleModal()}
           >
             Cadastrar
           </Button>

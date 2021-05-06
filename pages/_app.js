@@ -2,6 +2,8 @@
 import Head from 'next/head';
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../src/theme/GlobalStyles/instagram.css';
+import '../src/theme/GlobalStyles/flickity.css';
 
 export default function App({ Component, pageProps }) {
   return (
