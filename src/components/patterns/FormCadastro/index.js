@@ -1,4 +1,5 @@
 import React from 'react';
+import * as yup from 'yup';
 import { Lottie } from '@crello/react-lottie';
 import { Button } from '../../commons/Button';
 import Loader from '../../commons/Loader';
@@ -8,6 +9,8 @@ import { Grid } from '../../foundation/layout/Grid';
 import Text from '../../foundation/Text';
 import successAnimation from './animations/success.json';
 import errorAnimation from './animations/error.json';
+import { useForm } from '../../../infra/hooks/forms/useForm';
+import registerService from '../../../services/register/registerService';
 
 const formState = {
   DEFAULT: 'DEFAULT',
@@ -16,55 +19,50 @@ const formState = {
   ERROR: 'ERROR',
 };
 
+const registerSchema = yup.object().shape({
+  username: yup.string().required('"Usuário" é obrigatório'),
+  name: yup.string().required('"Nome" é obrigatório'),
+});
+
 function FormContent() {
-  const [userInfo, setUserInfo] = React.useState({
-    usuario: 'leandroritter1',
-    name: 'Leandro Ritter',
-  });
-  const [isFormSubmited, setIsFormSubmited] = React.useState(false);
   const [submissionStatus, setSubmissionStatus] = React.useState(
     formState.DEFAULT
   );
 
-  function handleChange(event) {
-    const fieldName = event.target.getAttribute('name');
-    setUserInfo({
-      ...userInfo,
-      [fieldName]: event.target.value,
-    });
-  }
+  const initialValues = {
+    username: '',
+    name: '',
+  };
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    setSubmissionStatus(formState.LOADING);
-    setIsFormSubmited(true);
-    fetch('https://instalura-api-git-master-omariosouto.vercel.app/api/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: userInfo.usuario,
-        name: userInfo.name,
-      }),
-    })
-      .then((resp) => {
-        if (resp.ok) {
-          return resp.json();
-        }
-        throw new Error('Nao foi possivel cadastrar o usuario');
-      })
-      .then(() => setSubmissionStatus(formState.DONE))
-      .catch(() => setSubmissionStatus(formState.ERROR));
-  }
-
-  const isFormInvalid =
-    userInfo.usuario.length === 0 || userInfo.name.length === 0;
+  const form = useForm({
+    initialValues,
+    onSubmit: (values) => {
+      form.setIsFormDisabled(true);
+      form.setIsFormLoading(true);
+      setSubmissionStatus(formState.LOADING);
+      registerService
+        .execute({
+          username: values.username,
+          name: values.name,
+        })
+        .catch(() => {
+          setSubmissionStatus(formState.ERROR);
+        })
+        .finally(() => {
+          form.setIsFormDisabled(false);
+          form.setIsFormLoading(false);
+          setSubmissionStatus(formState.DONE);
+        });
+    },
+    async validateSchema(values) {
+      return registerSchema.validate(values, { abortEarly: false });
+    },
+  });
 
   return (
     <>
       {submissionStatus === formState.LOADING ? <Loader /> : null}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={form.handleSubmit}>
         <Text variant="title" tag="h1" color="tertiary.main">
           Pronto para saber da vida dos outros?
         </Text>
@@ -82,29 +80,35 @@ function FormContent() {
           <TextField
             placeholder="Nome"
             name="name"
-            value={userInfo.name}
-            onChange={handleChange}
+            value={form.values.name}
+            error={form.errors.name}
+            onBlur={form.handleBlur}
+            onChange={form.handleChange}
+            isTouched={form.touched.name}
           />
         </div>
 
         <div>
           <TextField
             placeholder="Usuário"
-            name="usuario"
-            value={userInfo.usuario}
-            onChange={handleChange}
+            name="username"
+            value={form.values.username}
+            error={form.errors.username}
+            onBlur={form.handleBlur}
+            onChange={form.handleChange}
+            isTouched={form.touched.username}
           />
         </div>
 
         <Button
           variant="primary.main"
           type="submit"
-          disabled={isFormInvalid}
+          disabled={form.isFormDisabled}
           fullWidth
         >
           Cadastrar
         </Button>
-        {isFormSubmited && submissionStatus === formState.DONE && (
+        {!form.isFormDisabled && submissionStatus === formState.DONE && (
           <Box textAlign="center">
             <Lottie
               width="150px"
@@ -118,14 +122,14 @@ function FormContent() {
 
             <Text>
               O usuário
-              <Text fontWeight="600">{` ${userInfo.usuario} `}</Text>
+              <Text fontWeight="600">{` ${form.values.username} `}</Text>
               foi cadastrado com sucesso em nossa plataforma, seja bem vindo(a)
               !
             </Text>
           </Box>
         )}
 
-        {isFormSubmited && submissionStatus === formState.ERROR && (
+        {!form.isFormDisabled && submissionStatus === formState.ERROR && (
           <Box textAlign="center">
             <Lottie
               width="150px"
