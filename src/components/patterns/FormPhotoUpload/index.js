@@ -21,6 +21,7 @@ const photoSchema = yup.object().shape({
     .string()
     .matches(URL, 'Insira uma URL válida')
     .required('"URL" é obrigatório'),
+  description: yup.string().required('Insira uma descrição para o post'),
 });
 
 const flickityOptions = {
@@ -35,6 +36,7 @@ export default function FormPhotoUpload({ modalProps }) {
   const initialValues = {
     imageUrl: '',
     filter: '',
+    description: '',
   };
 
   const form = useForm({
@@ -47,6 +49,7 @@ export default function FormPhotoUpload({ modalProps }) {
         .photo({
           photoUrl: form.values.imageUrl,
           filter: currentFilter,
+          description: form.values.description,
         })
         .then(() => {
           websitePageContext.toggleModal();
@@ -56,7 +59,7 @@ export default function FormPhotoUpload({ modalProps }) {
         .finally(() => {
           form.setIsFormDisabled(false);
           form.setIsFormLoading(false);
-          form.setValues({ ...form.values, imageUrl: '' });
+          form.setValues({ ...form.values, imageUrl: '', description: '' });
           form.setTouched({ ...form.touched, imageUrl: false });
           websitePageContext.setProfileData();
         });
@@ -77,6 +80,15 @@ export default function FormPhotoUpload({ modalProps }) {
             <Box>
               <BoxPhoto>{PhotoSkeleto}</BoxPhoto>
               <Box padding="24px">
+                <TextField
+                  placeholder="Descrição da imagem"
+                  name="description"
+                  value={form.values.description}
+                  error={form.errors.description}
+                  onBlur={form.handleBlur}
+                  onChange={form.handleChange}
+                  isTouched={form.touched.description}
+                />
                 <TextField
                   placeholder="URL da imagem"
                   name="imageUrl"

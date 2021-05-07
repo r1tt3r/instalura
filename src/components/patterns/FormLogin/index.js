@@ -44,7 +44,7 @@ export default function LoginForm() {
           password: values.senha,
         })
         .then(() => {
-          router.push('/app/profile');
+          router.push('/app/feed');
         })
         .catch((err) =>
           setHasErros({ ...hasErrors, status: true, message: err })
