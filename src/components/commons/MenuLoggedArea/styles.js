@@ -15,7 +15,7 @@ export const MenuWrapper = styled.nav`
   ${breakpointsMedia({
     xs: css`
       position: fixed;
-      bottom: 0;
+      bottom: -1px;
       right: 0;
       left: 0;
       box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.04);
@@ -179,21 +179,21 @@ MenuWrapper.RightSide = styled.div`
   }
 `;
 
-export const Avatar = styled.div`
-  ${breakpointsMedia({
-    xs: css`
-      width: 24px;
-      height: 24px;
-    `,
+// export const Avatar = styled.div`
+//   ${breakpointsMedia({
+//     xs: css`
+//       width: 24px;
+//       height: 24px;
+//     `,
 
-    md: css`
-      width: 32px;
-      height: 32px;
-    `,
-  })}
-  background-color: #333;
-  border-radius: 50%;
-`;
+//     md: css`
+//       width: 32px;
+//       height: 32px;
+//     `,
+//   })}
+//   background-color: #333;
+//   border-radius: 50%;
+// `;
 
 export const ButtonModal = styled.button`
   border-radius: 50%;

@@ -20,7 +20,7 @@ export default function ProfileScreen() {
   }, [websitePageContext.getProfileData()]);
 
   return (
-    <Box paddingTop="50px" backgroundColor="#fff">
+    <Box paddingTop={{ md: '50px', xs: '20px' }} backgroundColor="#E5E5E5">
       <Grid.Container>
         <Grid.Row alignItems="center" justifyContent="center">
           <Grid.Col
