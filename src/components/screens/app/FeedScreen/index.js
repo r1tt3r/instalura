@@ -105,7 +105,12 @@ export default function FeedScreen() {
                 </Box>
 
                 {projetosDaGalera.map((projeto) => (
-                  <Box display="flex" alignItems="center" marginBottom="20px">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    marginBottom="20px"
+                    key={projeto.username}
+                  >
                     <Avatar size="big" border={false} />
                     <Box marginLeft="15px">
                       <Text tag="div" marginBottom="5px" fontWeight="500">
